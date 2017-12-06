@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_gravity="center"
+    android:layout_margin="5dp"
+    android:elevation="6dp"
+    android:clipToPadding="true"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="1dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:transitionName="profile"
+            app:srcCompat="@mipmap/ic_launcher_round" />
+
+        <TextView
+            android:layout_toLeftOf="@+id/avatar"
+            android:id="@+id/repositoryName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:text="Repository name"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="@android:color/black"
+            android:transitionName="profile"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/avatar"
+            android:layout_toEndOf="@+id/avatar" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_toRightOf="@+id/avatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/repositoryName"
+            android:layout_alignStart="@+id/repositoryName"
+            android:layout_below="@+id/repositoryName"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="............."
+            android:textColor="@android:color/black"
+            android:textSize="18dp"
+            android:transitionName="profile" />
+
+        <TextView
+            android:id="@+id/numberForks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/repositoryName"
+            android:layout_alignBottom="@+id/repositoryName"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:text="13"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>
