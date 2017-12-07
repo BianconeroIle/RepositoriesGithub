@@ -8,5 +8,6 @@ import com.example.ilijaangeleski.repositoriesgithub.model.GitRepositories;
 
 public interface GitRepositoriesCallback {
     void onSuccess(GitRepositories responseDTO);
+
     void onFailure(Throwable t);
 }

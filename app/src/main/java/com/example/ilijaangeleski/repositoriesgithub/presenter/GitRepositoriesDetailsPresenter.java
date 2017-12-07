@@ -1,6 +1,5 @@
 package com.example.ilijaangeleski.repositoriesgithub.presenter;
 
-import com.example.ilijaangeleski.repositoriesgithub.api.NetworkApi;
 import com.example.ilijaangeleski.repositoriesgithub.callback.GitSubscribersCallback;
 import com.example.ilijaangeleski.repositoriesgithub.manager.SubscribersManager;
 import com.example.ilijaangeleski.repositoriesgithub.model.GitSubscribers;
@@ -12,9 +11,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 /**
  * Created by Ilija Angeleski on 12/7/2017.
  */
@@ -25,9 +21,12 @@ public class GitRepositoriesDetailsPresenter {
     private WeakReference<SubscribersView> subscribersViewWeakReference;
     private List<GitSubscribers> subscribers = new ArrayList<>();
 
-    public GitRepositoriesDetailsPresenter(SubscribersView view, SubscribersManager subscribersManager) {
+    public GitRepositoriesDetailsPresenter(
+            WeakReference<SubscribersView> view,
+            SubscribersManager subscribersManager
+    ) {
         this.subscribersManager = subscribersManager;
-        this.subscribersViewWeakReference = new WeakReference<>(view);
+        this.subscribersViewWeakReference = view;
     }
 
     public void fetchSubscribers(final String url) {
@@ -38,7 +37,7 @@ public class GitRepositoriesDetailsPresenter {
                 if (view != null) {
                     if (response != null) {
                         subscribers.addAll(response);
-                        view.showSubscribers(subscribers.size());
+                        view.updateView(subscribers.size());
                     }
                 }
             }
@@ -61,13 +60,14 @@ public class GitRepositoriesDetailsPresenter {
         return new Gson().toJson(subscribers);
     }
 
-    public void loadSavedInstance(String jsonRepositories) {
+    public void loadSavedInstance(String json) {
         SubscribersView view = subscribersViewWeakReference.get();
         if (view != null) {
-            List<GitSubscribers> savedRepositories = new Gson().fromJson(jsonRepositories, new TypeToken<List<GitSubscribers>>() {
-            }.getType());
+            List<GitSubscribers> savedRepositories = new Gson()
+                    .fromJson(json, new TypeToken<List<GitSubscribers>>() {
+                    }.getType());
             subscribers.addAll(savedRepositories);
-            view.showSubscribers(getSubscribers().size());
+            view.updateView(getSubscribers().size());
         }
     }
 }

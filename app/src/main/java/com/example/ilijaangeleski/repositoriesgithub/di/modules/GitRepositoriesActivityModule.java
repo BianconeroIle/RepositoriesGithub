@@ -5,6 +5,8 @@ import com.example.ilijaangeleski.repositoriesgithub.manager.RepositoriesManager
 import com.example.ilijaangeleski.repositoriesgithub.presenter.GitRepositoriesPresenter;
 import com.example.ilijaangeleski.repositoriesgithub.view.RepositoriesView;
 
+import java.lang.ref.WeakReference;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,10 +15,10 @@ import dagger.Provides;
  */
 @Module
 public class GitRepositoriesActivityModule {
-    RepositoriesView view;
+    WeakReference<RepositoriesView> view;
 
     public GitRepositoriesActivityModule(RepositoriesView view) {
-        this.view = view;
+        this.view = new WeakReference<>(view);
     }
 
     @Provides

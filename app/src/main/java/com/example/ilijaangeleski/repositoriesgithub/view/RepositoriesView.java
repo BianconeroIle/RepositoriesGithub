@@ -5,6 +5,6 @@ package com.example.ilijaangeleski.repositoriesgithub.view;
  */
 
 public interface RepositoriesView {
-    void showRepositories();
+    void updateView();
     void showErrorGettingRepositories();
 }

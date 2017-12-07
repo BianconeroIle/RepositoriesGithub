@@ -21,9 +21,12 @@ public class GitRepositoriesPresenter {
     private WeakReference<RepositoriesView> weakReferenceMainView;
     private List<GitRepo> repositories = new ArrayList<>();
 
-    public GitRepositoriesPresenter(RepositoriesView view, RepositoriesManager repositoriesManager) {
+    public GitRepositoriesPresenter(
+            WeakReference<RepositoriesView> view,
+            RepositoriesManager repositoriesManager
+    ) {
         this.repositoriesManager = repositoriesManager;
-        this.weakReferenceMainView = new WeakReference<>(view);
+        this.weakReferenceMainView = view;
     }
 
     public void onTextChanged(final String query) {
@@ -35,10 +38,10 @@ public class GitRepositoriesPresenter {
                     if (response != null) {
                         repositories.clear();
                         repositories.addAll(response.getResults());
-                        view.showRepositories();
+                        view.updateView();
                     } else {
                         repositories.clear();
-                        view.showRepositories();
+                        view.updateView();
                     }
                 }
             }
@@ -61,13 +64,14 @@ public class GitRepositoriesPresenter {
         return new Gson().toJson(repositories);
     }
 
-    public void loadSavedInstance(String jsonRepositories) {
+    public void loadSavedInstance(String json) {
         RepositoriesView view = weakReferenceMainView.get();
         if (view != null) {
-            List<GitRepo> savedRepositories = new Gson().fromJson(jsonRepositories, new TypeToken<List<GitRepo>>() {
-            }.getType());
+            List<GitRepo> savedRepositories = new Gson()
+                    .fromJson(json, new TypeToken<List<GitRepo>>() {
+                    }.getType());
             repositories.addAll(savedRepositories);
-            view.showRepositories();
+            view.updateView();
         }
     }
 }

@@ -5,6 +5,6 @@ package com.example.ilijaangeleski.repositoriesgithub.view;
  */
 
 public interface SubscribersView {
-    void showSubscribers(int total);
+    void updateView(int total);
     void showErrorGettingSubscribers();
 }

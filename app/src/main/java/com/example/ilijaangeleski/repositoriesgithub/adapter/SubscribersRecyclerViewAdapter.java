@@ -24,16 +24,16 @@ import butterknife.ButterKnife;
 
 public class SubscribersRecyclerViewAdapter extends RecyclerView.Adapter<SubscribersRecyclerViewAdapter.MyViewHolder> {
     private List<GitSubscribers> subscribers;
-    private Context context;
 
-    public SubscribersRecyclerViewAdapter(List<GitSubscribers> subscribers, Context context) {
+    public SubscribersRecyclerViewAdapter(List<GitSubscribers> subscribers) {
         this.subscribers = subscribers;
-        this.context = context;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_subscriber, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_subscriber, parent, false);
+
         return new MyViewHolder(view);
     }
 
@@ -41,7 +41,7 @@ public class SubscribersRecyclerViewAdapter extends RecyclerView.Adapter<Subscri
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final GitSubscribers current = subscribers.get(position);
         holder.subscriberName.setText(current.getLogin());
-        Picasso.with(context).load(current.getAvatar_url())
+        Picasso.with(holder.avatar.getContext()).load(current.getAvatar_url())
                 .transform(new CircleTransform())
                 .placeholder(R.mipmap.ic_profile)
                 .error(R.mipmap.ic_profile)

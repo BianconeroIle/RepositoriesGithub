@@ -10,5 +10,6 @@ import java.util.List;
 
 public interface GitSubscribersCallback {
     void onSuccess(List<GitSubscribers> response);
+
     void onFailure(Throwable t);
 }

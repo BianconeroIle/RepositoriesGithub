@@ -1,6 +1,5 @@
 package com.example.ilijaangeleski.repositoriesgithub.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,14 +22,12 @@ import butterknife.ButterKnife;
  */
 
 public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<RepositoryRecyclerViewAdapter.MyViewHolder> {
-    static List<GitRepo> items;
-    private Context context;
+    private List<GitRepo> items;
     private int layoutResourceId;
     private OnUserItemClick listener;
 
-    public RepositoryRecyclerViewAdapter(List<GitRepo> items, Context context, int layoutResourceId) {
+    public RepositoryRecyclerViewAdapter(List<GitRepo> items, int layoutResourceId) {
         this.items = items;
-        this.context = context;
         this.layoutResourceId = layoutResourceId;
     }
 
@@ -40,7 +37,7 @@ public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Reposito
 
     @Override
     public RepositoryRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(layoutResourceId, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(layoutResourceId, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
@@ -51,7 +48,7 @@ public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Reposito
         holder.repositoryName.setText(current.getName());
         holder.description.setText(current.getDescription());
         holder.numberForks.setText(current.getForks());
-        Picasso.with(context).load(current.getOwner().getAvatar_url())
+        Picasso.with(holder.avatar.getContext()).load(current.getOwner().getAvatar_url())
                 .transform(new CircleTransform()).placeholder(R.mipmap.ic_profile).error(R.mipmap.ic_profile)
                 .into(holder.avatar);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -62,14 +59,14 @@ public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Reposito
                 }
             }
         });
-
     }
+
     @Override
     public int getItemCount() {
         return items.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.avatar)
         ImageView avatar;
         @BindView(R.id.repositoryName)
@@ -84,6 +81,7 @@ public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Reposito
             ButterKnife.bind(this, itemView);
         }
     }
+
     public void setOnUserItemClick(OnUserItemClick listener) {
         this.listener = listener;
     }

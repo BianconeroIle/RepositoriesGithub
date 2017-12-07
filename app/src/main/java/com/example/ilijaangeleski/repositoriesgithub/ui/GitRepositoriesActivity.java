@@ -31,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class GitRepositoriesActivity extends AppCompatActivity implements RepositoriesView {
+    public static final String ITEMS = "items";
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -52,7 +53,7 @@ public class GitRepositoriesActivity extends AppCompatActivity implements Reposi
         initListeners();
 
         if (savedInstanceState != null) {
-            presenter.loadSavedInstance(savedInstanceState.getString("items"));
+            presenter.loadSavedInstance(savedInstanceState.getString(ITEMS));
         }
     }
 
@@ -68,18 +69,21 @@ public class GitRepositoriesActivity extends AppCompatActivity implements Reposi
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("items", presenter.getRepositoriesAsJson());
+        outState.putString(ITEMS, presenter.getRepositoriesAsJson());
     }
 
     @Override
-    public void showRepositories() {
+    public void updateView() {
         adapter.notifyDataSetChanged();
     }
 
     public void initView() {
-        adapter = new RepositoryRecyclerViewAdapter(presenter.getRepositories(), getApplicationContext(), R.layout.item_repository);
+        adapter = new RepositoryRecyclerViewAdapter(
+                presenter.getRepositories(),
+                R.layout.item_repository
+        );
         RecyclerView.LayoutManager layoutManager;
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (isLandscape()) {
             layoutManager = new GridLayoutManager(this, 2);
             recyclerView.setLayoutManager(layoutManager);
         } else {
@@ -87,6 +91,10 @@ public class GitRepositoriesActivity extends AppCompatActivity implements Reposi
             recyclerView.setLayoutManager(layoutManager);
         }
         recyclerView.setAdapter(adapter);
+    }
+
+    private boolean isLandscape() {
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     public void initListeners() {
@@ -97,7 +105,6 @@ public class GitRepositoriesActivity extends AppCompatActivity implements Reposi
                 openGitDetailsActivity(repo, avatar);
             }
         });
-
 
         searchRepository.addTextChangedListener(new TextWatcher() {
             CountDownTimer timer = null;

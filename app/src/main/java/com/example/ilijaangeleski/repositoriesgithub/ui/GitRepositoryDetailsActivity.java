@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 
 public class GitRepositoryDetailsActivity extends AppCompatActivity implements SubscribersView {
     public static final String REPOSITORY_EXTRA = "repository";
+    public static final String ITEMS = "items";
 
     @BindView(R.id.avatar)
     ImageView avatar;
@@ -62,7 +63,7 @@ public class GitRepositoryDetailsActivity extends AppCompatActivity implements S
         initView();
 
         if (savedInstanceState != null) {
-            presenter.loadSavedInstance(savedInstanceState.getString("items"));
+            presenter.loadSavedInstance(savedInstanceState.getString(ITEMS));
         } else {
             presenter.fetchSubscribers(gitRepo.getSubscribers_url());
         }
@@ -80,11 +81,11 @@ public class GitRepositoryDetailsActivity extends AppCompatActivity implements S
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("items", presenter.getRepositoriesAsJson());
+        outState.putString(ITEMS, presenter.getRepositoriesAsJson());
     }
 
     public void initView() {
-        adapter = new SubscribersRecyclerViewAdapter(presenter.getSubscribers(), this);
+        adapter = new SubscribersRecyclerViewAdapter(presenter.getSubscribers());
         repositoryName.setText(gitRepo.getName());
         Picasso.with(this).load(gitRepo.getOwner().getAvatar_url())
                 .transform(new CircleTransform())
@@ -105,7 +106,7 @@ public class GitRepositoryDetailsActivity extends AppCompatActivity implements S
     }
 
     @Override
-    public void showSubscribers(int total) {
+    public void updateView(int total) {
         subscribers.setText(total + "");
         adapter.notifyDataSetChanged();
     }
