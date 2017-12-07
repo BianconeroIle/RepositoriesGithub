@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="@dimen/activity_margin">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,11 +14,11 @@
             android:id="@+id/avatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:layout_marginLeft="10dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_gravity="center"
-            app:srcCompat="@mipmap/ic_launcher_round" />
+            android:layout_gravity="center" />
 
         <TextView
             android:id="@+id/repositoryName"
@@ -26,10 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/listOfSubscribers"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:layout_toEndOf="@+id/avatar"
             android:layout_toRightOf="@+id/avatar"
-            android:text="BianconeroIle"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
         <TextView
@@ -41,9 +40,9 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_gravity="center"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="183"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
     </LinearLayout>
 

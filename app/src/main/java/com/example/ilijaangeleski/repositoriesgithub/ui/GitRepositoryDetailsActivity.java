@@ -11,13 +11,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ilijaangeleski.repositoriesgithub.MyApp;
 import com.example.ilijaangeleski.repositoriesgithub.R;
 import com.example.ilijaangeleski.repositoriesgithub.adapter.SubscribersRecyclerViewAdapter;
+import com.example.ilijaangeleski.repositoriesgithub.di.components.DaggerGitRepositoriesDetailsComponent;
+import com.example.ilijaangeleski.repositoriesgithub.di.modules.GitRepositoriesDetailsActivityModule;
 import com.example.ilijaangeleski.repositoriesgithub.model.GitRepo;
 import com.example.ilijaangeleski.repositoriesgithub.presenter.GitRepositoriesDetailsPresenter;
 import com.example.ilijaangeleski.repositoriesgithub.utils.CircleTransform;
 import com.example.ilijaangeleski.repositoriesgithub.view.SubscribersView;
 import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,20 +42,23 @@ public class GitRepositoryDetailsActivity extends AppCompatActivity implements S
     TextView subscribers;
     @BindView(R.id.listOfSubscribers)
     RecyclerView recyclerListOfSubscribers;
-    private GitRepositoriesDetailsPresenter presenter;
+    @Inject
+    GitRepositoriesDetailsPresenter presenter;
     private GitRepo gitRepo;
     private SubscribersRecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acitivity_repository_details);
+        setContentView(R.layout.activity_repository_details);
         ButterKnife.bind(this);
+        createDependencies();
+
         if (getIntent().getExtras() != null
                 && getIntent().hasExtra(REPOSITORY_EXTRA)) {
             gitRepo = (GitRepo) getIntent().getExtras().getSerializable(REPOSITORY_EXTRA);
         }
-        presenter = new GitRepositoriesDetailsPresenter(this);
+
         initView();
 
         if (savedInstanceState != null) {
@@ -58,6 +66,15 @@ public class GitRepositoryDetailsActivity extends AppCompatActivity implements S
         } else {
             presenter.fetchSubscribers(gitRepo.getSubscribers_url());
         }
+    }
+
+    private void createDependencies() {
+        DaggerGitRepositoriesDetailsComponent
+                .builder()
+                .gitRepositoriesDetailsActivityModule(new GitRepositoriesDetailsActivityModule(this))
+                .baseComponent(MyApp.getApp().getBaseComponent())
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -89,7 +106,7 @@ public class GitRepositoryDetailsActivity extends AppCompatActivity implements S
 
     @Override
     public void showSubscribers(int total) {
-        subscribers.setText(total+"");
+        subscribers.setText(total + "");
         adapter.notifyDataSetChanged();
     }
 

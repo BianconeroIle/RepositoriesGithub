@@ -25,13 +25,8 @@ public class GitRepositoriesDetailsPresenter {
     private WeakReference<SubscribersView> subscribersViewWeakReference;
     private List<GitSubscribers> subscribers = new ArrayList<>();
 
-    public GitRepositoriesDetailsPresenter(SubscribersView view) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(NetworkApi.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        NetworkApi networkApi = retrofit.create(NetworkApi.class);
-        this.subscribersManager = new SubscribersManager(networkApi);
+    public GitRepositoriesDetailsPresenter(SubscribersView view, SubscribersManager subscribersManager) {
+        this.subscribersManager = subscribersManager;
         this.subscribersViewWeakReference = new WeakReference<>(view);
     }
 

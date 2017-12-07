@@ -16,11 +16,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.ilijaangeleski.repositoriesgithub.MyApp;
 import com.example.ilijaangeleski.repositoriesgithub.R;
 import com.example.ilijaangeleski.repositoriesgithub.adapter.RepositoryRecyclerViewAdapter;
+import com.example.ilijaangeleski.repositoriesgithub.di.components.DaggerGitRepositoriesActivityComponent;
+import com.example.ilijaangeleski.repositoriesgithub.di.modules.GitRepositoriesActivityModule;
 import com.example.ilijaangeleski.repositoriesgithub.model.GitRepo;
 import com.example.ilijaangeleski.repositoriesgithub.presenter.GitRepositoriesPresenter;
 import com.example.ilijaangeleski.repositoriesgithub.view.RepositoriesView;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +36,10 @@ public class GitRepositoriesActivity extends AppCompatActivity implements Reposi
     RecyclerView recyclerView;
     @BindView(R.id.searchRepository)
     EditText searchRepository;
+
+    @Inject
     GitRepositoriesPresenter presenter;
+
     private RepositoryRecyclerViewAdapter adapter;
 
     @Override
@@ -39,12 +47,22 @@ public class GitRepositoriesActivity extends AppCompatActivity implements Reposi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repository);
         ButterKnife.bind(this);
-        presenter = new GitRepositoriesPresenter(this);
+        createDependencies();
         initView();
         initListeners();
+
         if (savedInstanceState != null) {
             presenter.loadSavedInstance(savedInstanceState.getString("items"));
         }
+    }
+
+    private void createDependencies() {
+        DaggerGitRepositoriesActivityComponent
+                .builder()
+                .gitRepositoriesActivityModule(new GitRepositoriesActivityModule(this))
+                .baseComponent(MyApp.getApp().getBaseComponent())
+                .build()
+                .inject(this);
     }
 
     @Override
