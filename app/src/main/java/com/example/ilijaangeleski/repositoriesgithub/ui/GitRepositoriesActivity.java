@@ -1,10 +1,12 @@
 package com.example.ilijaangeleski.repositoriesgithub.ui;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -38,8 +40,17 @@ public class GitRepositoriesActivity extends AppCompatActivity implements Reposi
         setContentView(R.layout.activity_repository);
         ButterKnife.bind(this);
         presenter = new GitRepositoriesPresenter(this);
-        initVariables();
+        initView();
         initListeners();
+        if (savedInstanceState != null) {
+            presenter.loadSavedInstance(savedInstanceState.getString("items"));
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("items", presenter.getRepositoriesAsJson());
     }
 
     @Override
@@ -47,13 +58,16 @@ public class GitRepositoriesActivity extends AppCompatActivity implements Reposi
         adapter.notifyDataSetChanged();
     }
 
-    public void initVariables() {
+    public void initView() {
         adapter = new RepositoryRecyclerViewAdapter(presenter.getRepositories(), getApplicationContext(), R.layout.item_repository);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                layoutManager.getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setLayoutManager(layoutManager);
+        RecyclerView.LayoutManager layoutManager;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layoutManager = new GridLayoutManager(this, 2);
+            recyclerView.setLayoutManager(layoutManager);
+        } else {
+            layoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(layoutManager);
+        }
         recyclerView.setAdapter(adapter);
     }
 
@@ -62,29 +76,46 @@ public class GitRepositoriesActivity extends AppCompatActivity implements Reposi
             @Override
             public void onRepositoryClick(GitRepo repo, ImageView avatar) {
                 Log.d("", "onRepositoryClick :" + repo);
-                Intent intent = new Intent(GitRepositoriesActivity.this, GitRepositoryDetailsActivity.class);
-                intent.putExtra(GitRepositoryDetailsActivity.REPOSITORY_EXTRA, repo);
-                ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(GitRepositoriesActivity.this, avatar, "profile");
-                startActivity(intent, options.toBundle());
+                openGitDetailsActivity(repo, avatar);
             }
         });
+
+
         searchRepository.addTextChangedListener(new TextWatcher() {
+            CountDownTimer timer = null;
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (timer != null) {
+                    timer.cancel();
+                }
+                timer = new CountDownTimer(500, 250) {
+                    public void onTick(long millisUntilFinished) {
+                    }
 
+                    public void onFinish() {
+                        presenter.onTextChanged(searchRepository.getText().toString());
+                    }
+                }.start();
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                presenter.onTextChanged(editable.toString());
+
             }
         });
+    }
+
+    private void openGitDetailsActivity(GitRepo repo, ImageView avatar) {
+        Intent intent = new Intent(GitRepositoriesActivity.this, GitRepositoryDetailsActivity.class);
+        intent.putExtra(GitRepositoryDetailsActivity.REPOSITORY_EXTRA, repo);
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(GitRepositoriesActivity.this, avatar, "profile");
+        startActivity(intent, options.toBundle());
     }
 
     @Override

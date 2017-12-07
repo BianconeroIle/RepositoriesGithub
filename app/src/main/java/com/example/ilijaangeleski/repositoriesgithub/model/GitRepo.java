@@ -1,28 +1,23 @@
 package com.example.ilijaangeleski.repositoriesgithub.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
  * Created by Ilija Angeleski on 12/6/2017.
  */
 
-public class GitRepo implements Serializable{
+public class GitRepo implements Serializable {
 
+    @SerializedName("name")
     private String name;
     private String full_name;
     private String description;
     private String forks;
     private String forks_url;
+    private String subscribers_url;
     private Owner owner;
-
-    public GitRepo(String name, String full_name, String description, String forks, String forks_url, Owner owner) {
-        this.name = name;
-        this.full_name = full_name;
-        this.description = description;
-        this.forks = forks;
-        this.forks_url = forks_url;
-        this.owner = owner;
-    }
 
     public String getName() {
         return name;
@@ -64,6 +59,14 @@ public class GitRepo implements Serializable{
         this.forks_url = forks_url;
     }
 
+    public String getSubscribers_url() {
+        return subscribers_url;
+    }
+
+    public void setSubscribers_url(String subscribers_url) {
+        this.subscribers_url = subscribers_url;
+    }
+
     public Owner getOwner() {
         return owner;
     }
@@ -71,4 +74,5 @@ public class GitRepo implements Serializable{
     public void setOwner(Owner owner) {
         this.owner = owner;
     }
+
 }

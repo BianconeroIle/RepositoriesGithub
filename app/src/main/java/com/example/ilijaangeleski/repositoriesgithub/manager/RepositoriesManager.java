@@ -22,7 +22,7 @@ public class RepositoriesManager {
     }
 
     public void fetchRepositories(String query, final GitRepositoriesCallback callback) {
-        Call<GitRepositories> call = networkApi.fetchRepositories(query);
+        Call<GitRepositories> call = networkApi.fetchRepositories(NetworkApi.TOKEN, query);
         call.enqueue(new Callback<GitRepositories>() {
             @Override
             public void onResponse(Call<GitRepositories> call, Response<GitRepositories> response) {

@@ -84,11 +84,6 @@ public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Reposito
             ButterKnife.bind(this, itemView);
         }
     }
-
-    public static List<GitRepo> getItems() {
-        return items;
-    }
-
     public void setOnUserItemClick(OnUserItemClick listener) {
         this.listener = listener;
     }

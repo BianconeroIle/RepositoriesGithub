@@ -17,6 +17,7 @@ public class GitRepositories implements Serializable {
     @SerializedName("items")
     private List<GitRepo> results;
 
+
     public GitRepositories(long total_count, boolean incomplete_results, List<GitRepo> results) {
         this.total_count = total_count;
         this.incomplete_results = incomplete_results;

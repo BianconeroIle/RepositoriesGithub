@@ -5,7 +5,7 @@ android {
     buildToolsVersion "27.0.0"
     defaultConfig {
         applicationId "com.example.ilijaangeleski.repositoriesgithub"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -39,5 +39,4 @@ dependencies {
     androidTestCompile 'org.mockito:mockito-android:2.7.22'
     compile "com.google.dagger:dagger:2.8"
     annotationProcessor "com.google.dagger:dagger-compiler:2.8"
-
 }
