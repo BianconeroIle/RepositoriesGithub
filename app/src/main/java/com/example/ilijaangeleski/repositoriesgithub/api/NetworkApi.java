@@ -19,12 +19,9 @@ import retrofit2.http.Url;
 public interface NetworkApi {
 
     String BASE_URL = "https://api.github.com/";
-    String TOKEN = "f59e2124a8cc4de25037bc0b4864e8c2964395e8";
 
     @GET("search/repositories")
-    Call<GitRepositories> fetchRepositories(
-            @Header("Authentication") String token,
-            @Query("q") String query);
+    Call<GitRepositories> fetchRepositories(@Query("q") String query);
 
     @GET
     Call<List<GitSubscribers>> fetchSubscriptions(@Url String url);

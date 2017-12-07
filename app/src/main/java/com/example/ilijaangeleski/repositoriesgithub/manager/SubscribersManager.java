@@ -28,13 +28,13 @@ public class SubscribersManager {
         call.enqueue(new Callback<List<GitSubscribers>>() {
             @Override
             public void onResponse(Call<List<GitSubscribers>> call, Response<List<GitSubscribers>> response) {
-                Log.d("fetchSubscriptions", "onResponse");
+                Log.d("fetchSubscribers", "onResponse");
                 callback.onSuccess(response.body());
             }
 
             @Override
             public void onFailure(Call<List<GitSubscribers>> call, Throwable t) {
-                Log.d("fetchSubscriptions", "OnFailure");
+                Log.d("fetchSubscribers", "onFailure");
                 callback.onFailure(t);
             }
         });

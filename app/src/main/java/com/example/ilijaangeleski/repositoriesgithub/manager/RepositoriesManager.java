@@ -22,18 +22,18 @@ public class RepositoriesManager {
     }
 
     public void fetchRepositories(String query, final GitRepositoriesCallback callback) {
-        Call<GitRepositories> call = networkApi.fetchRepositories(NetworkApi.TOKEN, query);
+        Call<GitRepositories> call = networkApi.fetchRepositories(query);
         call.enqueue(new Callback<GitRepositories>() {
             @Override
             public void onResponse(Call<GitRepositories> call, Response<GitRepositories> response) {
+                Log.d("fetchRepositories", "onResponse");
                 callback.onSuccess(response.body());
-                Log.d("onTextChanged","Success");
             }
 
             @Override
             public void onFailure(Call<GitRepositories> call, Throwable t) {
+                Log.d("fetchRepositories", "OnFailure");
                 callback.onFailure(t);
-                Log.d("onTextChanged","OnFailure");
             }
         });
     }
