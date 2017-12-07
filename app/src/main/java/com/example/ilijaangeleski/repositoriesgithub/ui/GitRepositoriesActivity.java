@@ -23,6 +23,7 @@ import com.example.ilijaangeleski.repositoriesgithub.di.components.DaggerGitRepo
 import com.example.ilijaangeleski.repositoriesgithub.di.modules.GitRepositoriesActivityModule;
 import com.example.ilijaangeleski.repositoriesgithub.model.GitRepo;
 import com.example.ilijaangeleski.repositoriesgithub.presenter.GitRepositoriesPresenter;
+import com.example.ilijaangeleski.repositoriesgithub.view.LoadingView;
 import com.example.ilijaangeleski.repositoriesgithub.view.RepositoriesView;
 
 import javax.inject.Inject;
@@ -37,6 +38,8 @@ public class GitRepositoriesActivity extends AppCompatActivity implements Reposi
     RecyclerView recyclerView;
     @BindView(R.id.searchRepository)
     EditText searchRepository;
+    @BindView(R.id.loadingView)
+    LoadingView loadingView;
 
     @Inject
     GitRepositoriesPresenter presenter;
@@ -74,6 +77,7 @@ public class GitRepositoriesActivity extends AppCompatActivity implements Reposi
 
     @Override
     public void updateView() {
+        loadingView.hide();
         adapter.notifyDataSetChanged();
     }
 
@@ -124,6 +128,7 @@ public class GitRepositoriesActivity extends AppCompatActivity implements Reposi
 
                     public void onFinish() {
                         presenter.onTextChanged(searchRepository.getText().toString());
+                        loadingView.showProgress();
                     }
                 }.start();
             }
@@ -146,5 +151,10 @@ public class GitRepositoriesActivity extends AppCompatActivity implements Reposi
     @Override
     public void showErrorGettingRepositories() {
         Toast.makeText(this, R.string.error_getting_repositories, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void noResultsFound() {
+        loadingView.showNoRepositoriesFound();
     }
 }

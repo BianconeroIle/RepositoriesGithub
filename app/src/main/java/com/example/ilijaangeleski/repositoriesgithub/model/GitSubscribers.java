@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class GitSubscribers implements Serializable {
     @SerializedName("login")
     private String login;
+
     private long id;
     private String avatar_url;
     private String gravatar_id;

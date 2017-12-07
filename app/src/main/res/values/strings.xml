@@ -3,4 +3,5 @@
     <string name="enter_repository_name">Enter repository name</string>
     <string name="error_getting_repositories">Error getting repositories</string>
     <string name="error_getting_subscribers">Error getting subscribers</string>
+    <string name="no_repositories_found">No Repositories found :(</string>
 </resources>

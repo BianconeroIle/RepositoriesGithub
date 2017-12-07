@@ -7,4 +7,5 @@ package com.example.ilijaangeleski.repositoriesgithub.view;
 public interface RepositoriesView {
     void updateView();
     void showErrorGettingRepositories();
+    void noResultsFound();
 }

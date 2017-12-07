@@ -35,13 +35,16 @@ public class GitRepositoriesPresenter {
             public void onSuccess(GitRepositories response) {
                 RepositoriesView view = weakReferenceMainView.get();
                 if (view != null) {
-                    if (response != null) {
+                    if (response != null
+                            && response.getResults() != null
+                            && !response.getResults().isEmpty()) {
                         repositories.clear();
                         repositories.addAll(response.getResults());
                         view.updateView();
                     } else {
                         repositories.clear();
                         view.updateView();
+                        view.noResultsFound();
                     }
                 }
             }
