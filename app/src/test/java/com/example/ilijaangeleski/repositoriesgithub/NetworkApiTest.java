@@ -22,9 +22,9 @@ public class NetworkApiTest {
     @Test
     public void testApiResponse() {
         NetworkApi mockedApiInterface = Mockito.mock(NetworkApi.class);
-        final Call<List<GitRepositories>> mockedCall = Mockito.mock(Call.class);
+        final Call mockedCall = Mockito.mock(Call.class);
 
-     //   Mockito.when(mockedApiInterface.fetchRepositories("f59e2124a8cc4de25037bc0b4864e8c2964395e8","showbox"));
+        Mockito.when(mockedApiInterface.fetchRepositories("dsdadasdsadasdadasdsa")).thenReturn(mockedCall);
 
         Mockito.doAnswer(new Answer() {
             @Override
