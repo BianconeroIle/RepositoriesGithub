@@ -7,7 +7,7 @@ import com.example.ilijaangeleski.repositoriesgithub.model.GitRepositories;
  */
 
 public interface GitRepositoriesCallback {
-    void onSuccess(GitRepositories responseDTO);
+    void onSuccess(GitRepositories response);
 
     void onFailure(Throwable t);
 }

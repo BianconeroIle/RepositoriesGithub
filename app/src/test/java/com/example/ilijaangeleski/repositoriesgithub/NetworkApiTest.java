@@ -24,13 +24,14 @@ public class NetworkApiTest {
         NetworkApi mockedApiInterface = Mockito.mock(NetworkApi.class);
         final Call mockedCall = Mockito.mock(Call.class);
 
-        Mockito.when(mockedApiInterface.fetchRepositories("dsdadasdsadasdadasdsa")).thenReturn(mockedCall);
+        Mockito.when(mockedApiInterface.fetchRepositories("showbox")).thenReturn(mockedCall);
 
         Mockito.doAnswer(new Answer() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 Callback<List<GitRepositories>> callback = invocation.getArgument(0);
-                callback.onResponse(mockedCall, Response.success((List<GitRepositories>) new ArrayList<GitRepositories>()));
+                callback.onResponse(mockedCall, Response.success((List<GitRepositories>)
+                        new ArrayList<GitRepositories>()));
 
                 return null;
             }
