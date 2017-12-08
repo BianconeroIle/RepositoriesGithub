@@ -1,6 +1,5 @@
 package com.example.ilijaangeleski.repositoriesgithub.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +40,7 @@ public class SubscribersRecyclerViewAdapter extends RecyclerView.Adapter<Subscri
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final GitSubscribers current = subscribers.get(position);
         holder.subscriberName.setText(current.getLogin());
-        Picasso.with(holder.avatar.getContext()).load(current.getAvatar_url())
+        Picasso.with(holder.avatar.getContext()).load(current.getAvatarUrl())
                 .transform(new CircleTransform())
                 .placeholder(R.mipmap.ic_profile)
                 .error(R.mipmap.ic_profile)

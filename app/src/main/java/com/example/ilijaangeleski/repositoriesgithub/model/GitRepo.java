@@ -12,11 +12,17 @@ public class GitRepo implements Serializable {
 
     @SerializedName("name")
     private String name;
-    private String full_name;
+    @SerializedName("full_name")
+    private String fullName;
+    @SerializedName("description")
     private String description;
+    @SerializedName("forks")
     private String forks;
-    private String forks_url;
-    private String subscribers_url;
+    @SerializedName("forks_url")
+    private String forksUrl;
+    @SerializedName("subscribers_url")
+    private String subscribersUrl;
+
     private Owner owner;
 
     public String getName() {
@@ -27,12 +33,12 @@ public class GitRepo implements Serializable {
         this.name = name;
     }
 
-    public String getFull_name() {
-        return full_name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getDescription() {
@@ -51,20 +57,20 @@ public class GitRepo implements Serializable {
         this.forks = forks;
     }
 
-    public String getForks_url() {
-        return forks_url;
+    public String getForksUrl() {
+        return forksUrl;
     }
 
-    public void setForks_url(String forks_url) {
-        this.forks_url = forks_url;
+    public void setForksUrl(String forksUrl) {
+        this.forksUrl = forksUrl;
     }
 
-    public String getSubscribers_url() {
-        return subscribers_url;
+    public String getSubscribersUrl() {
+        return subscribersUrl;
     }
 
-    public void setSubscribers_url(String subscribers_url) {
-        this.subscribers_url = subscribers_url;
+    public void setSubscribersUrl(String subscribersUrl) {
+        this.subscribersUrl = subscribersUrl;
     }
 
     public Owner getOwner() {
@@ -74,5 +80,4 @@ public class GitRepo implements Serializable {
     public void setOwner(Owner owner) {
         this.owner = owner;
     }
-
 }

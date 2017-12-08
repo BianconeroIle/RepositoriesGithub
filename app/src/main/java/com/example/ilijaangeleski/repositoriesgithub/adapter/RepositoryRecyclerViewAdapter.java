@@ -48,7 +48,7 @@ public class RepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Reposito
         holder.repositoryName.setText(current.getName());
         holder.description.setText(current.getDescription());
         holder.numberForks.setText(current.getForks());
-        Picasso.with(holder.avatar.getContext()).load(current.getOwner().getAvatar_url())
+        Picasso.with(holder.avatar.getContext()).load(current.getOwner().getAvatarUrl())
                 .transform(new CircleTransform()).placeholder(R.mipmap.ic_profile).error(R.mipmap.ic_profile)
                 .into(holder.avatar);
         holder.itemView.setOnClickListener(new View.OnClickListener() {

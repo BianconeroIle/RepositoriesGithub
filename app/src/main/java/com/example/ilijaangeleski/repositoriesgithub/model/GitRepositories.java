@@ -10,27 +10,27 @@ import java.util.List;
  */
 
 public class GitRepositories implements Serializable {
-
-    private long total_count;
-    private boolean incomplete_results;
-
+    @SerializedName("total_count")
+    private long totalCount;
+    @SerializedName("incomplete_results")
+    private boolean incompleteResults;
     @SerializedName("items")
     private List<GitRepo> results;
 
-    public long getTotal_count() {
-        return total_count;
+    public long getTotalCount() {
+        return totalCount;
     }
 
-    public void setTotal_count(long total_count) {
-        this.total_count = total_count;
+    public void setTotalCount(long totalCount) {
+        this.totalCount = totalCount;
     }
 
-    public boolean isIncomplete_results() {
-        return incomplete_results;
+    public boolean isIncompleteResults() {
+        return incompleteResults;
     }
 
-    public void setIncomplete_results(boolean incomplete_results) {
-        this.incomplete_results = incomplete_results;
+    public void setIncompleteResults(boolean incompleteResults) {
+        this.incompleteResults = incompleteResults;
     }
 
     public List<GitRepo> getResults() {

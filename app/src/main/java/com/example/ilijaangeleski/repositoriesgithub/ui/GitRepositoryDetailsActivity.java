@@ -65,7 +65,7 @@ public class GitRepositoryDetailsActivity extends AppCompatActivity implements S
         if (savedInstanceState != null) {
             presenter.loadSavedInstance(savedInstanceState.getString(ITEMS));
         } else {
-            presenter.fetchSubscribers(gitRepo.getSubscribers_url());
+            presenter.fetchSubscribers(gitRepo.getSubscribersUrl());
         }
     }
 
@@ -87,7 +87,7 @@ public class GitRepositoryDetailsActivity extends AppCompatActivity implements S
     public void initView() {
         adapter = new SubscribersRecyclerViewAdapter(presenter.getSubscribers());
         repositoryName.setText(gitRepo.getName());
-        Picasso.with(this).load(gitRepo.getOwner().getAvatar_url())
+        Picasso.with(this).load(gitRepo.getOwner().getAvatarUrl())
                 .transform(new CircleTransform())
                 .placeholder(R.mipmap.ic_profile)
                 .error(R.mipmap.ic_profile)
